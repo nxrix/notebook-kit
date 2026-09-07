@@ -164,8 +164,8 @@ export abstract class AbstractFile implements FileAttachment {
     });
   }
   async arrow(): Promise<any> {
-    const [Arrow, response] = await Promise.all([import("https://cdn.jsdelivr.net/npm/apache-arrow@17.0.0/+esm"), fetchFile(this)]); // prettier-ignore
-    return Arrow.tableFromIPC(response);
+    const [Flechette, buffer] = await Promise.all([import("https://cdn.jsdelivr.net/npm/@uwdata/flechette/+esm"), this.arrayBuffer()]); // prettier-ignore
+    return Flechette.tableFromIPC(buffer, {useDate: true});
   }
   async arquero(options?: any): Promise<any> {
     let request: Promise<unknown>;
@@ -199,8 +199,8 @@ export abstract class AbstractFile implements FileAttachment {
     return aq[from](body, options);
   }
   async parquet() {
-    const [Arrow, Parquet, buffer] = await Promise.all([import("https://cdn.jsdelivr.net/npm/apache-arrow@17.0.0/+esm"), import("https://cdn.jsdelivr.net/npm/parquet-wasm/+esm").then(async (Parquet) => (await Parquet.default("https://cdn.jsdelivr.net/npm/parquet-wasm/esm/parquet_wasm_bg.wasm"), Parquet)), this.arrayBuffer()]); // prettier-ignore
-    return Arrow.tableFromIPC(Parquet.readParquet(new Uint8Array(buffer)).intoIPCStream());
+    const [Flechette, Parquet, buffer] = await Promise.all([import("https://cdn.jsdelivr.net/npm/@uwdata/flechette/+esm"), import("https://cdn.jsdelivr.net/npm/parquet-wasm/+esm").then(async (Parquet) => (await Parquet.default("https://cdn.jsdelivr.net/npm/parquet-wasm/esm/parquet_wasm_bg.wasm"), Parquet)), this.arrayBuffer()]); // prettier-ignore
+    return Flechette.tableFromIPC(Parquet.readParquet(new Uint8Array(buffer)).intoIPCStream(), {useDate: true}); // prettier-ignore
   }
   async zip() {
     const [{ZipArchive}, buffer] = await Promise.all([import("./zip.js"), this.arrayBuffer()]);
