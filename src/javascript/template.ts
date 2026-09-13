@@ -110,8 +110,8 @@ export function transpileTemplate(input: string | Cell, tag = "", raw = false): 
     (raw ? escapeRawTemplateElements : escapeTemplateElements)(source, template);
     node = template;
   }
-  source.insertLeft(node.start, `${cell?.output ? `const ${cell.output} = ` : ""}${prefix}\``);
-  source.insertRight(node.end, `\`${suffix}${cell?.output ? ";" : ""}`);
+  source.insertLeft(node.start, `${prefix}\``);
+  source.insertRight(node.end, `\`${suffix}`);
   return String(source);
 }
 

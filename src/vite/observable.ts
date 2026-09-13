@@ -164,7 +164,7 @@ export function observable({
               if (!cell.output) statics.add(cell);
             }
             cell.mode = "js";
-            cell.value = `FileAttachment(${JSON.stringify(relative(sourceDir, cachePath))})${getInterpreterMethod(format)}`;
+            cell.value = `FileAttachment(${JSON.stringify(relative(sourceDir, cachePath))})${getInterpreterMethod(format)}${hidden || !cell.output ? "" : ".then(display)"}`;
             if (cell.output) {
               cell.value = `const ${cell.output} = ${cell.value};`;
               cell.output = undefined;

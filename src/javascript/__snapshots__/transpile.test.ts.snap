@@ -945,10 +945,11 @@ Inputs.table(await (await DatabaseClient.of(db, "db")).sql\`SELECT 1 + 2\`)
 
 exports[`transpiles SQL cells 2`] = `
 {
-  "autodisplay": false,
+  "autodisplay": true,
   "body": "async (display,Inputs,DatabaseClient,db) => {
-const three = ((_) => (display(Inputs.table(_)), _))(await (await DatabaseClient.of(db, "db")).sql\`SELECT 1 + 2\`);
-return {three};
+return (
+((_) => (display(Inputs.table(_)), _))(await (await DatabaseClient.of(db, "db")).sql\`SELECT 1 + 2\`)
+)
 }",
   "databases": Set {},
   "files": Set {},
@@ -958,9 +959,8 @@ return {three};
     "DatabaseClient",
     "db",
   ],
-  "outputs": [
-    "three",
-  ],
+  "output": "three",
+  "outputs": [],
   "secrets": Set {},
 }
 `;
