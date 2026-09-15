@@ -965,6 +965,26 @@ return (
 }
 `;
 
+exports[`transpiles SQL cells 3`] = `
+{
+  "autodisplay": false,
+  "body": "async (DatabaseClient,db) => {
+return (
+await (await DatabaseClient.of(db, "db")).sql\`SELECT 1 + 2\`
+)
+}",
+  "databases": Set {},
+  "files": Set {},
+  "inputs": [
+    "DatabaseClient",
+    "db",
+  ],
+  "output": "three",
+  "outputs": [],
+  "secrets": Set {},
+}
+`;
+
 exports[`transpiles TypeScript class expressions 1`] = `
 {
   "autodisplay": false,

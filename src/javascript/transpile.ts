@@ -69,12 +69,11 @@ export function transpile(
         : mode !== "js"
           ? transpileJavaScript(transpileTemplate(cell), options)
           : transpileJavaScript(input, options);
-  if (cell.hidden) {
-    transpiled.autodisplay = false;
-  } else if (mode !== "ts" && mode !== "js" && mode !== "ojs") {
+  if (mode !== "ts" && mode !== "js" && mode !== "ojs") {
     if (cell.output) transpiled.output = cell.output;
     if (cell.value) transpiled.autodisplay = true;
   }
+  if (cell.hidden) transpiled.autodisplay = false;
   return transpiled;
 }
 
