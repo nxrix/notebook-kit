@@ -1,8 +1,3 @@
-declare module "@observablehq/inspector" {
-  export class Inspector {
-    constructor(element: HTMLElement);
-    pending(): void;
-    fulfilled(value: unknown, name?: string): void;
-    rejected(error: unknown, name?: string): void;
-  }
+declare module "https://cdn.jsdelivr.net/npm/@observablehq/inputs/+esm" {
+  export function table(value: unknown): HTMLElement;
 }
