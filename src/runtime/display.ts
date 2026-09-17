@@ -1,3 +1,4 @@
+import {unprefix} from "../lib/unprefix.js";
 import type {Definition} from "./define.js";
 import {inspect, inspectError, getExpanded} from "./inspect.js";
 import {mapAssets} from "./stdlib/assets.js";
@@ -71,8 +72,9 @@ export function clear(state: DisplayState): void {
 
 export function observe(
   state: DisplayState,
-  {autodisplay, assets, output: name, displayMode: mode}: Definition
+  {autodisplay, assets, output: name, automutable, displayMode: mode}: Definition
 ) {
+  if (automutable && name) name = unprefix(name, "initial ");
   return {
     _error: false,
     _node: state.root, // _node for visibility promise

@@ -1,4 +1,5 @@
 import type {Module, Variable, VariableDefinition} from "@observablehq/runtime";
+import {unprefix} from "../lib/unprefix.js";
 import type {DisplayState, DisplayMode} from "./display.js";
 import {clear, display, observe} from "./display.js";
 import {input} from "./stdlib/generators/index.js";
@@ -93,9 +94,4 @@ export function define(
       variables.push(main.variable(true).define(o, [vid!], (exports) => exports[o]));
     }
   }
-}
-
-function unprefix(name: string, prefix: string): string {
-  if (!name.startsWith(prefix)) throw new Error(`expected ${prefix}: ${name}`);
-  return name.slice(prefix.length);
 }
