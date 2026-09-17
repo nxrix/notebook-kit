@@ -25,7 +25,8 @@ function getImportAttributeKey(node: ImportAttribute): string {
 export function renderObservableImport(
   source: string,
   node: ImportDeclaration | ImportWithDeclaration,
-  inputs: string[]
+  inputs: string[],
+  renameImport: (name: string) => string = String
 ): string {
   if (!inputs.includes("@variable")) inputs.push("@variable");
   return `(import(${source}).then((_) => {
@@ -35,7 +36,7 @@ export function renderObservableImport(
   const outputs = new Map(Array.from(__variable._outputs, (v) => [v._name, v]));${flatMapImportSpecifiers(
     node,
     (specifier) => {
-      const i = dedollar(getImportedName(specifier));
+      const i = renameImport(getImportedName(specifier));
       const l = getLocalName(specifier);
       return `
   outputs.get(${JSON.stringify(l)})?.import(${JSON.stringify(i)}${i === l ? "" : `, ${JSON.stringify(l)}`}, module);`;

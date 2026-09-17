@@ -2,7 +2,7 @@ import type {CallExpression, ImportDeclaration, MemberExpression, Node} from "ac
 import type {ImportDefaultSpecifier, ImportNamespaceSpecifier, ImportSpecifier} from "acorn";
 import {resolveJsrImport} from "./imports/jsr.js";
 import {resolveNpmImport} from "./imports/npm.js";
-import {isObservableImport, isMutableImport, isViewImport} from "./imports/observable.js";
+import {isObservableImport, isMutableImport, isViewImport, dedollar} from "./imports/observable.js";
 import {resolveObservableImport, renderObservableImport} from "./imports/observable.js";
 import {toSpecialImportSpecifier} from "./imports/observable.js";
 import type {Sourcemap} from "./sourcemap.js";
@@ -83,6 +83,8 @@ export type ImportOptions = {
   resolveImport?: (specifier: string) => string;
   /** If true, resolve local imports relative to document.baseURI. */
   resolveLocalImports?: boolean;
+  /** If specified, allows renaming of imported variables such as viewof$foo for backwards compatibility. */
+  renameObservableImport?: (name: string) => string;
 };
 
 export function rewriteImportExpressions(
@@ -127,7 +129,11 @@ export function rewriteImportDeclarations(
   output: Sourcemap,
   body: Node,
   inputs: string[],
-  {resolveImport = resolveImportDefault, resolveLocalImports}: ImportOptions = {}
+  {
+    resolveImport = resolveImportDefault,
+    resolveLocalImports,
+    renameObservableImport = dedollar
+  }: ImportOptions = {}
 ): void {
   const declarations: [ImportDeclaration, StringLiteral][] = [];
 
@@ -154,7 +160,7 @@ export function rewriteImportDeclarations(
         : JSON.stringify(resolution);
     imports.push(
       isObservableImport(node, value)
-        ? renderObservableImport(source, node, inputs)
+        ? renderObservableImport(source, node, inputs, renameObservableImport)
         : renderImport(source, node, output.input)
     );
   }
