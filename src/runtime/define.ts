@@ -79,7 +79,7 @@ export function define(
       const o = unprefix(output, "viewof$");
       variables.push(main.define(o, [output], input));
     } else if (automutable) {
-      const o = unprefix(output, "mutable ");
+      const o = unprefix(output, "initial ");
       const x = `cell ${id}`;
       v.define(o, [x], ([mutable]) => mutable); // observe live value
       variables.push(

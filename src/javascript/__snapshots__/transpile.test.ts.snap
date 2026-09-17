@@ -923,6 +923,76 @@ return {figure,rot,viewof$rot};
 }
 `;
 
+exports[`transpiles Observable JavaScript mutable declarations and references 1`] = `
+{
+  "autodisplay": true,
+  "automutable": true,
+  "autoview": false,
+  "body": "function mutable$foo(){return(
+42
+)}",
+  "databases": Set {},
+  "files": Set {},
+  "inputs": [],
+  "output": "initial foo",
+  "secrets": Set {},
+}
+`;
+
+exports[`transpiles Observable JavaScript mutable declarations and references 2`] = `
+{
+  "autodisplay": true,
+  "automutable": false,
+  "autoview": false,
+  "body": "function(mutable$foo){return(
+mutable$foo.value++
+)}",
+  "databases": Set {},
+  "files": Set {},
+  "inputs": [
+    "mutable$foo",
+  ],
+  "output": undefined,
+  "secrets": Set {},
+}
+`;
+
+exports[`transpiles Observable JavaScript viewof declarations and references 1`] = `
+{
+  "autodisplay": true,
+  "automutable": false,
+  "autoview": true,
+  "body": "function viewof$foo(Inputs){return(
+Inputs.range()
+)}",
+  "databases": Set {},
+  "files": Set {},
+  "inputs": [
+    "Inputs",
+  ],
+  "output": "viewof$foo",
+  "secrets": Set {},
+}
+`;
+
+exports[`transpiles Observable JavaScript viewof declarations and references 2`] = `
+{
+  "autodisplay": true,
+  "automutable": false,
+  "autoview": false,
+  "body": "function(viewof$foo){return(
+viewof$foo.value
+)}",
+  "databases": Set {},
+  "files": Set {},
+  "inputs": [
+    "viewof$foo",
+  ],
+  "output": undefined,
+  "secrets": Set {},
+}
+`;
+
 exports[`transpiles SQL cells 1`] = `
 {
   "autodisplay": true,

@@ -137,6 +137,6 @@ function asDeclaration(ref: Identifier | ViewExpression | MutableExpression): st
   return ref.type === "ViewExpression"
     ? `viewof$${ref.id.name}`
     : ref.type === "MutableExpression"
-      ? `mutable ${ref.id.name}` // "initial x", really
+      ? `initial ${ref.id.name}`
       : ref.name;
 }

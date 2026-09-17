@@ -104,6 +104,16 @@ it("erases ambient TypeScript declarations", () => {
   expect(transpile('declare module "m" { export const x: number; }', "ts")).toMatchSnapshot();
 });
 
+it("transpiles Observable JavaScript viewof declarations and references", () => {
+  expect(transpile('viewof foo = Inputs.range()', "ojs")).toMatchSnapshot();
+  expect(transpile('viewof foo.value', "ojs")).toMatchSnapshot();
+});
+
+it("transpiles Observable JavaScript mutable declarations and references", () => {
+  expect(transpile('mutable foo = 42', "ojs")).toMatchSnapshot();
+  expect(transpile('mutable foo++', "ojs")).toMatchSnapshot();
+});
+
 it("transpiles static npm: imports", () => {
   expect(transpile('import * as d3 from "npm:d3";', "js")).toMatchSnapshot();
   expect(transpile('import _ from "npm:lodash";', "js")).toMatchSnapshot();
