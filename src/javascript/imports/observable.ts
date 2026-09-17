@@ -96,29 +96,8 @@ export function isMutableImport(node: NamedImportSpecifier): node is ImportSpeci
   return "mutable" in node && !!node.mutable;
 }
 
-/** Turns e.g. "viewof$foo" into "viewof foo", and "$$" into "$". */
+/** Turns e.g. "viewof$foo" into "viewof foo", and "viewof$$foo" into "viewof$foo". */
 export function dedollar(input: string): string {
-  const start = 0;
-  const end = input.length;
-  let dollars = 0;
-  for (let i = start; i < end; ++i) {
-    switch (input.charCodeAt(i)) {
-      case CODE_DOLLAR: {
-        ++dollars;
-        break;
-      }
-      default: {
-        if (dollars > 0) {
-          input = `${input.slice(0, i - 1)}${dollars === 1 ? " " : ""}${input.slice(i)}`;
-          dollars = 0;
-        }
-        break;
-      }
-    }
-  }
-  if (dollars > 0) {
-    input = `${input.slice(0, end - 1)}${dollars === 1 ? " " : ""}`;
-    dollars = 0;
-  }
-  return input;
+  const match = /^(viewof|mutable)([$]+)([^$].*)$/.exec(input);
+  return match ? `${match[1]}${match[2].length > 1 ? match[2].slice(1) : " "}${match[3]}` : input;
 }
