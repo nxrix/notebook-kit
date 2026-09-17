@@ -4,8 +4,6 @@ import type {Identifier} from "acorn";
 import type {NamedImportSpecifier} from "../imports.js";
 import {flatMapImportSpecifiers, getImportedName, getLocalName} from "../imports.js";
 
-const CODE_DOLLAR = 36;
-
 /** If specifier is an observable: protocol import, resolves it. */
 export function resolveObservableImport(specifier: string): string {
   if (!specifier.startsWith("observable:")) return specifier;
