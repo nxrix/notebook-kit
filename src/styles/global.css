@@ -128,13 +128,15 @@ h2,
 h3,
 h4,
 h5,
-h6 {
+h6,
+.katex-display {
   max-width: 640px;
 }
 
 .katex-display {
-  overflow-x: auto;
-  overflow-y: hidden;
+  overflow: auto hidden;
+  padding-top: 0.5em;
+  padding-bottom: 0.5em;
 }
 
 blockquote,
